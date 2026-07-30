@@ -74,7 +74,7 @@ stages:
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
-                az deployment sub create --location $(location) --template-file infra/subscription/resourceGroup.bicep --parameters applicationName=productmanager-api environment=$(environment) location=$(location) tags='{"Environment":$(environment),"Application":"ProductManagerApi","Owner":"NarayanaReddy","ManagedBy":"Bicep"}'
+                az deployment sub create --location $(location) --template-file infra/subscription/resourceGroup.bicep --parameters applicationName=productmanager-api environment=$(environment) location=$(location) tags='{"Environment":"$(environment)","Application":"ProductManagerApi","Owner":"NarayanaReddy","ManagedBy":"Bicep"}'
           - task: AzureCLI@2
             displayName: Deploy Infrastructure
             inputs:
