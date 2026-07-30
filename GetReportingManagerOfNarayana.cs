@@ -5,17 +5,17 @@ using Microsoft.Extensions.Logging;
 
 namespace ProductManagerFunction;
 
-public class Function1
+public class GetReportingManagerOfNarayana
 {
-    private readonly ILogger<Function1> _logger;
+    private readonly ILogger<GetReportingManagerOfNarayana> _logger;
 
-    public Function1(ILogger<Function1> logger)
+    public GetReportingManagerOfNarayana(ILogger<GetReportingManagerOfNarayana> logger)
     {
         _logger = logger;
     }
 
     [Function("getReportingManagerOfNarayana")]
-    public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req)
+    public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequest req)
     {
         _logger.LogInformation("C# HTTP trigger function processed a request.");
         return new OkObjectResult("Welcome to Azure Functions!");
