@@ -25,6 +25,7 @@ resource storage 'Microsoft.Storage/storageAccounts@2024-01-01' = {
 }
 
 
+
 output storageAccountName string = storage.name
 output storageAccountId string = storage.id
 output blobServiceUri string = storage.properties.primaryEndpoints.blob

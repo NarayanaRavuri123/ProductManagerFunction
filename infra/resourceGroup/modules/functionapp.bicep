@@ -22,7 +22,7 @@ resource functionApp 'Microsoft.Web/sites@2023-12-01' = {
 		deployment: {
 			storage: {
 			  type: 'blobContainer'
-			  value: '<deployment package location>'
+			  value: 'https://stpmdev001.blob.core.windows.net/first-container'
 			  authentication: {
 				type: 'SystemAssignedIdentity'
 			  }
