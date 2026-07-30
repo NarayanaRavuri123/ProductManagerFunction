@@ -18,6 +18,6 @@ public class GetReportingManagerOfNarayana
     public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequest req)
     {
         _logger.LogInformation("C# HTTP trigger function processed a request.");
-        return new OkObjectResult("Welcome to Azure Functions!");
+        return new OkObjectResult("Narayana's Reporting Manager is Nisarga Narain");
     }
 }
