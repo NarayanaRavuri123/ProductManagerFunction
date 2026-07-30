@@ -57,3 +57,61 @@ stages:
       inputs:
         targetPath: $(publishDirectory)
         artifact: functionapp
+- stage: Deploy_Infra_Dev
+  displayName: Deploy Infrastructure - Dev
+
+  dependsOn: Build
+
+  jobs:
+
+  - deployment: DeployInfrastructure
+
+    displayName: Deploy Bicep
+
+    environment: Dev
+
+    strategy:
+      runOnce:
+        deploy:
+
+          steps:
+
+          - checkout: self
+
+          - task: AzureCLI@2
+            displayName: Deploy Resource Group
+
+            inputs:
+              azureSubscription: 'sc-productmanager-dev'
+
+              scriptType: bash
+
+              scriptLocation: inlineScript
+
+              inlineScript: |
+
+                az deployment sub create \
+                  --location "South India" \
+                  --template-file infra/subscription/resourceGroup.bicep \
+                  --parameters \
+                    applicationName=productmanager-api \
+                    environment=dev \
+                    location="South India" \
+                    tags='{"Environment":"Development","Application":"ProductManagerApi","Owner":"NarayanaReddy","ManagedBy":"Bicep"}'
+
+          - task: AzureCLI@2
+            displayName: Deploy Infrastructure
+
+            inputs:
+              azureSubscription: 'sc-productmanager-dev'
+
+              scriptType: bash
+
+              scriptLocation: inlineScript
+
+              inlineScript: |
+
+                az deployment group create \
+                  --resource-group rg-productmanager-api-dev \
+                  --template-file infra/resourceGroup/main.bicep \
+                  --parameters infra/resourceGroup/parameters/dev.bicepparam
