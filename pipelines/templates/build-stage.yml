@@ -1,10 +1,1 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ProductManagerFunction.pipelines.templates
-{
-    class build_stage
-    {
-    }
-}
+﻿

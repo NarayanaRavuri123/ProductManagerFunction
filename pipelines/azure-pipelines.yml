@@ -10,11 +10,11 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-  buildConfiguration: 'Release'
-  dotnetVersion: '10.0.x'
-  functionProject: 'ProductManagerFunction.csproj'
-  publishDirectory: '$(Build.ArtifactStagingDirectory)/publish'
+# variables:
+#   buildConfiguration: 'Release'
+#   dotnetVersion: '10.0.x'
+#   functionProject: 'ProductManagerFunction.csproj'
+#   publishDirectory: '$(Build.ArtifactStagingDirectory)/publish'
 
 stages:
 - stage: Build

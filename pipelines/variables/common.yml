@@ -1,8 +1,6 @@
 ﻿variables:
-
   buildConfiguration: Release
   dotnetVersion: 10.0.x
-
   functionProject: ProductManagerFunction.csproj
-
   artifactName: functionapp
+  publishDirectory: '$(Build.ArtifactStagingDirectory)/publish'
