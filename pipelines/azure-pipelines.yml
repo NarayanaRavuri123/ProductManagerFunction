@@ -1,8 +1,4 @@
-﻿variables:
-- template: variables/common.yml
-- template: variables/dev.yml
-
-trigger:
+﻿trigger:
   branches:
     include:
       - main
@@ -10,11 +6,9 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-# variables:
-#   buildConfiguration: 'Release'
-#   dotnetVersion: '10.0.x'
-#   functionProject: 'ProductManagerFunction.csproj'
-#   publishDirectory: '$(Build.ArtifactStagingDirectory)/publish'
+variables:
+- template: variables/common.yml
+- template: variables/dev.yml
 
 stages:
 - stage: Build
