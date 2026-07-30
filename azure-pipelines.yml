@@ -55,7 +55,7 @@ stages:
       inputs:
         targetPath: $(publishDirectory)
         artifact: functionapp
-- stage: 'Deploy_Infra_$(environment)'
+- stage: Deploy_Infra
   displayName: 'Deploy Infrastructure - $(environment)'
   dependsOn: Build
   jobs:
@@ -84,7 +84,7 @@ stages:
               inlineScript: |
                 az deployment group create --resource-group $(resourceGroup) --template-file infra/resourceGroup/main.bicep --parameters infra/resourceGroup/parameters/$(environment).bicepparam
 
-- stage: 'Deploy_Function_$(environment)'
+- stage: Deploy_Function
   displayName: 'Deploy Function App - $(environment)'
   dependsOn: 'Deploy_Infra_$(environment)'
   jobs:
