@@ -1,17 +1,2 @@
-<<<<<<< Updated upstream
-trigger:
-  branches:
-    include:
-      - main
-=======
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
->>>>>>> Stashed changes
-
-namespace ProductManagerFunction
-{
-    class azure_pipelines
-    {
-    }
-}
+extends:
+  template: pipelines/azure-pipelines.yml
