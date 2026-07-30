@@ -1,0 +1,6 @@
+﻿variables:
+  environment: dev
+  location: South India
+  resourceGroup: rg-productmanager-api-dev
+  functionAppName: func-productmanager-api-dev
+  serviceConnection: sc-productmanager-dev
