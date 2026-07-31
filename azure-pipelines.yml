@@ -155,7 +155,7 @@ stages:
           - task: AzureFunctionApp@2
             displayName: Deploy Azure Function
             inputs:
-              azureSubscription: 'sc-productmanager-$(environment)'
+              azureSubscription: 'sc-productmanager-dev'
               appType: functionAppLinux
               appName: $(functionAppName)
               package: '$(Pipeline.Workspace)/functionapp/**/*.zip'
