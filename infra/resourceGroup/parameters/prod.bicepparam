@@ -8,5 +8,5 @@ param tags = {
   Environment: 'PRODUCTION'
   Application: 'ProductManagerApi'
   Owner: 'NarayanaReddy'
-  ManagedBy: 'Bicep'az
+  ManagedBy: 'Bicep'
 }

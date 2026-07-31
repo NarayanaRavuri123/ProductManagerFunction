@@ -55,7 +55,7 @@ stages:
       inputs:
         targetPath: $(publishDirectory)
         artifact: functionapp
-- stage: Deploy_Infra
+- stage: Deploy_Infra_Dev
   displayName: Deploy Infrastructure
   dependsOn: Build
   jobs:
@@ -84,13 +84,68 @@ stages:
               inlineScript: |
                 az deployment group create --resource-group $(resourceGroup) --template-file infra/resourceGroup/main.bicep --parameters infra/resourceGroup/parameters/$(environment).bicepparam
 
-- stage: Deploy_Function
+- stage: Deploy_Function_Dev
   displayName: Deploy Function App
-  dependsOn: Deploy_Infra
+  dependsOn: Deploy_Infra_Dev
   jobs:
   - deployment: DeployFunction
     displayName: Deploy Function
     environment: $(environment)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: functionapp
+          - task: AzureFunctionApp@2
+            displayName: Deploy Azure Function
+            inputs:
+              azureSubscription: 'sc-productmanager-$(environment)'
+              appType: functionAppLinux
+              appName: $(functionAppName)
+              package: '$(Pipeline.Workspace)/functionapp/**/*.zip'
+
+
+- stage: Deploy_Infra_QA
+  variables:
+  - group: vg-productmanager-qa
+  displayName: Deploy Infrastructure
+  dependsOn: Deploy_Function_Dev
+  jobs:
+  - deployment: DeployInfrastructure
+    displayName: Deploy Bicep
+    environment: QA
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: self
+          - task: AzureCLI@2
+            displayName: Deploy Resource Group
+            inputs:
+              azureSubscription: $(serviceConnection)
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az deployment sub create --location $(location) --template-file infra/subscription/resourceGroup.bicep --parameters applicationName=productmanager-api environment=$(environment) location=$(location) tags='{"Environment":"$(environment)","Application":"ProductManagerApi","Owner":"NarayanaReddy","ManagedBy":"Bicep"}'
+          - task: AzureCLI@2
+            displayName: Deploy Infrastructure
+            inputs:
+              azureSubscription: $(serviceConnection)
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az deployment group create --resource-group $(resourceGroup) --template-file infra/resourceGroup/main.bicep --parameters infra/resourceGroup/parameters/$(environment).bicepparam
+
+- stage: Deploy_Function_QA
+  variables:
+  - group: vg-productmanager-qa
+  displayName: Deploy Function App
+  dependsOn: Deploy_Infra_QA
+  jobs:
+  - deployment: DeployFunction
+    displayName: Deploy Function
+    environment: QA
     strategy:
       runOnce:
         deploy:
