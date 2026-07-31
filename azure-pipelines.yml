@@ -114,7 +114,7 @@ stages:
   jobs:
   - deployment: DeployInfrastructure
     displayName: Deploy Bicep
-    environment: QA
+    environment: qa
     strategy:
       runOnce:
         deploy:
@@ -145,7 +145,7 @@ stages:
   jobs:
   - deployment: DeployFunction
     displayName: Deploy Function
-    environment: QA
+    environment: qa
     strategy:
       runOnce:
         deploy:
